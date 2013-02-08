@@ -19,12 +19,9 @@ class theoricus.commands.Server
     @server = http.createServer( @_handler )
 
     Server.io = (require "socket.io").listen @server
+    Server.io.set('log level', 1);
 
     @server.listen @port
-
-    Server.io.sockets.on "connection", (socket) ->
-
-      console.log 'client connected'
 
     console.log "#{'Server running at'.bold} http://localhost:#{@port}".grey
 
