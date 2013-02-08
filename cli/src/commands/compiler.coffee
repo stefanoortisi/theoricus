@@ -31,6 +31,18 @@ class theoricus.commands.Compiler
       @compile()
       false
 
+    @toaster.build = ( header_code = "", footer_code = "" )->
+      for builder in @toast.builders
+
+        if builder.config.src_folders[0].alias is 'app'
+          builder.build header_code, footer_code
+        else
+          builder.build()
+
+      if ( Server = theoricus.commands.Server ).io?
+
+        Server.io.sockets.emit( 'refresh', js: true );
+
     # compiling everything at startup
     @compile()
 
@@ -38,12 +50,12 @@ class theoricus.commands.Compiler
     return unless watch
 
     fsw_static = fsu.watch "#{@APP_FOLDER}/static", /(.jade|.styl)$/m
-    fsw_static.on 'create', (FnUtil.proxy @_on_jade_stylus_change, 'create')
-    fsw_static.on 'change', (FnUtil.proxy @_on_jade_stylus_change, 'change')
-    fsw_static.on 'delete', (FnUtil.proxy @_on_jade_stylus_change, 'delete')
+    fsw_static.on 'create', (FnUtil.proxy @_on_file_change, 'create')
+    fsw_static.on 'change', (FnUtil.proxy @_on_file_change, 'change')
+    fsw_static.on 'delete', (FnUtil.proxy @_on_file_change, 'delete')
 
     fsw_config = fsu.watch "#{@BASE_DIR}/config", /(.coffee)$/m
-    fsw_config.on 'change', (FnUtil.proxy @_on_jade_stylus_change, 'change')
+    fsw_config.on 'change', (FnUtil.proxy @_on_file_change, 'change')
 
   _get_vendors:=>
 
@@ -63,7 +75,7 @@ class theoricus.commands.Compiler
 
     vendors
 
-  _on_jade_stylus_change:( ev, f )=>
+  _on_file_change:( ev, f )=>
     # skipe all folder creation
     return if f.type == "dir" and ev == "created"
 
@@ -100,6 +112,10 @@ class theoricus.commands.Compiler
         target = "#{@the.pwd}/public/app.css"
         fs.writeFileSync target, css
         console.log "[#{now}] #{'Compiled'.bold} #{target}".green
+
+        if ( Server = theoricus.commands.Server ).io?
+
+          Server.io.sockets.emit( 'refresh', style: true );
 
 
 
@@ -197,14 +213,6 @@ class theoricus.commands.Compiler
 
     # formatted time to CLI notifications
     now = ("#{new Date}".match /[0-9]{2}\:[0-9]{2}\:[0-9]{2}/)[0]
-
-    ###
-    send message through socket.io asking browser to refresh
-    ###
-    # Server = theoricus.commands.Server
-    
-    # if Server.io?
-    #   Server.io.sockets.emit( 'refresh', null );
 
     return unless compile_stylus
 
