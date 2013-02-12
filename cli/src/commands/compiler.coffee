@@ -15,6 +15,8 @@ class theoricus.commands.Compiler
   BASE_DIR: ""
   APP_FOLDER: ""
 
+  Server = theoricus.commands
+
   constructor:( @the, watch = false )->
 
     @BASE_DIR = @the.pwd
@@ -190,7 +192,7 @@ class theoricus.commands.Compiler
           if --@pending_stylus is 0
             after_compile( buffer.join "\n" ) 
 
-      Server.io.sockets.emit( 'refresh', style: true );
+      Server.io?.sockets.emit( 'refresh', style: true );
 
   # updates the release files
   compile:( compile_stylus = true )->
@@ -215,7 +217,7 @@ class theoricus.commands.Compiler
     ###
     send message through socket.io asking browser to refresh ( js = true )
     ###
-    Server.io.sockets.emit( 'refresh', js: true );
+    Server.io?.sockets.emit( 'refresh', js: true );
 
     # formatted time to CLI notifications
     now = ("#{new Date}".match /[0-9]{2}\:[0-9]{2}\:[0-9]{2}/)[0]
