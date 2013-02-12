@@ -20,13 +20,13 @@ class theoricus.commands.Server
 
     Server.io = (require "socket.io").listen @server
 
+    Server.io.set 'log level', 1
+
     @server.listen @port
 
-    Server.io.sockets.on "connection", (socket) ->
+    console.log "#{'Socket.io at'.bold} http://localhost}".grey
 
-      console.log 'client connected'
-
-    console.log "#{'Server running at'.bold} http://localhost:#{@port}".grey
+    console.log "#{'Simple Server running at'.bold} http://localhost:#{@port}".grey
 
   close_server:()->
     @server.close()
