@@ -8,6 +8,8 @@ watch:
 	$(TOASTER) . -wd
 
 build:
+	git submodule update --init
+	
 	$(TOASTER) . -c
 
 test: build
