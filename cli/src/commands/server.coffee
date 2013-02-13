@@ -18,13 +18,14 @@ class theoricus.commands.Server
   start_server:()->
     @server = http.createServer( @_handler )
 
-    Server.io = (require "socket.io").listen @server
+    s = theoricus.commands.Server
+    s.io = (require "socket.io").listen @server
 
-    Server.io.set 'log level', 1
+    s.io.set 'log level', 1
 
     @server.listen @port
 
-    console.log "#{'Socket.io at'.bold} http://localhost}".grey
+    console.log "#{'Socket.io at'.bold} http://localhost".grey
 
     console.log "#{'Simple Server running at'.bold} http://localhost:#{@port}".grey
 
