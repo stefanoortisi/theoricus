@@ -8,6 +8,7 @@ watch:
 	$(TOASTER) . -wd
 
 build:
+	npm install
 	$(TOASTER) . -c
 
 test: build
