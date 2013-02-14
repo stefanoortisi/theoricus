@@ -136,9 +136,9 @@ class theoricus.commands.Compiler
       source = fs.readFileSync file, "utf-8"
 
       # inject some virtual id's to be used by the model binding
-      search = /#{([\w]+)}/g
-      replace = '<!-- @$1 -->#{$1}<!-- /@$1 -->'
-      source = source.replace search, replace
+      # search = /#{([\w]+)}/g
+      # replace = '<!-- @$1 -->#{$1}<!-- /@$1 -->'
+      # source = source.replace search, replace
 
       # compile source
       # TODO: move compile options to config file
