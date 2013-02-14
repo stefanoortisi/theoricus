@@ -11,6 +11,8 @@ build:
 	git submodule update --init
 	
 	$(TOASTER) . -c
+link: build
+	sudo npm link
 
 test: build
 	# TODO: add testing routine
