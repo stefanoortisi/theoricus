@@ -130,8 +130,11 @@ class theoricus.core.Factory
   ###
   @template=@::template=( path )->
     # console.log "Factory.template( #{path} )"
+
+
     if app.templates[path]?
       return app.templates[path]
 
-    console.error "Template ( " + path + " ) doesn't exit"
-    null
+    if app.templates['component/' + path]?
+      return app.templates['component/' + path]
+      
