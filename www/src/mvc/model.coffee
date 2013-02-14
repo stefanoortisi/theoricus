@@ -123,6 +123,6 @@ class theoricus.mvc.Model extends theoricus.mvc.lib.Binder
       model = (Factory.model classname, record)
       records.push model
 
-    _collection = _collection.concat records
+    _collection = ( _collection || [] ).concat records
 
     return if records.length is 1 then records[0] else records
