@@ -87,7 +87,10 @@ class theoricus.mvc.View
             ( @el.find sel ).bind   ev, null, @[funk]
 
     ###
-    Called before completely erasing the view
+    Destroy the view after the 'out' animation, the default behavior is to just
+    empty it's container element.
+
+    before_destroy will be called just before emptying it.
     ###
     destroy: () ->
         @before_destroy?()
@@ -123,13 +126,6 @@ class theoricus.mvc.View
             after_out()
         else
             @el.animate {opacity: 0}, 300, after_out
-
-    ###
-    Destroy the view after the 'out' animation, the default behavior is to just
-    empty it's container element.
-    ###
-    destroy:->
-        @el.empty()
 
     # ~> Shortcuts
 
