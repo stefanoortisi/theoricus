@@ -153,7 +153,7 @@ class theoricus.commands.Compiler
 
     # format everything
     output = output.replace( "~TEMPLATES", buffer.join "," )
-    output = @to_single_line output
+    # output = @to_single_line output
 
     # return all jade files compiled for use in client
     return "// TEMPLATES\n#{output}"
