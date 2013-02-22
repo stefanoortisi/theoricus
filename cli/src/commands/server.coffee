@@ -78,6 +78,12 @@ class theoricus.commands.Server
           response.writeHead 200, {"Content-Type": "image/#{mime[1]}"}
         else if filename.match /.css$/m
           response.writeHead 200, {"Content-Type": "text/css"}
+        else if filename.match /.woff$/m
+          response.writeHead 200, {"Content-Type": "font/opentype"}
+        else if filename.match /.ttf$/m
+          response.writeHead 200, {"Content-Type": "font/opentype"}
+        else if filename.match /.json$/m
+          response.writeHead 200, {"Content-Type": "application/json"}
 
         response.write file, "binary"
         response.end()
