@@ -64,17 +64,6 @@ class theoricus.mvc.View
             @on_resize()
 
     ###
-    TODO: Document method.
-    ###
-    require: ( view, container, data = @data, template ) ->
-        view = @view view
-
-        if container
-            view.render data, @el.find container, template
-
-        view
-
-    ###
     In case you defined @events in your view they will be automatically binded
     ###
     set_triggers: () =>
@@ -152,3 +141,24 @@ class theoricus.mvc.View
     ###
     template:( path )->
         Factory.template path
+
+    ###
+    TODO: Document method.
+    ###
+    require: ( view, container, data = @data, template ) ->
+        view = @view view
+
+        if container
+            view.render data, @el.find container, template
+
+        view
+
+    find: ( selector ) => @el.find selector
+
+    link: ( a_selector ) ->
+
+        @find( a_selector ).click ( event ) =>
+
+            @navigate $( event.delegateTarget ).attr( 'href' )
+
+            return off
