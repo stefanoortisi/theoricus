@@ -42,13 +42,14 @@ class theoricus.commands.Server
     uri = url.parse( request.url ).pathname
     filename = path.join( @root, uri )
 
-    if not fs.existsSync( filename )
+    if uri.indexOf( '.' ) isnt -1
+      if not fs.existsSync( filename )
 
-      response.writeHead(404, {"Content-Type": "text/plain"});
-      response.write( "File #{filename} doesn't exist" );
-      response.end();
+        response.writeHead(404, {"Content-Type": "text/plain"});
+        response.write( "File #{filename} doesn't exist" );
+        response.end();
 
-      return
+        return
 
     fs.exists filename, (exists)=>
 
