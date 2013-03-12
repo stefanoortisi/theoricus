@@ -134,4 +134,8 @@ class theoricus.core.Factory
     if app.templates[path]?
       return app.templates[path]
 
+    if app.templates['components/' + path]?
+      return app.templates['components/' + path]
+
     console.error "Factory::template not found for #{path}"
+      
