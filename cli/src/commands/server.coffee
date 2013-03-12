@@ -42,6 +42,14 @@ class theoricus.commands.Server
     uri = url.parse( request.url ).pathname
     filename = path.join( @root, uri )
 
+    if not fs.existsSync( filename )
+
+      response.writeHead(404, {"Content-Type": "text/plain"});
+      response.write( "File #{filename} doesn't exist" );
+      response.end();
+
+      return
+
     fs.exists filename, (exists)=>
 
       if !exists || fs.lstatSync( filename ).isDirectory()
@@ -63,7 +71,6 @@ class theoricus.commands.Server
           response.write file
           response.end()
         return
-
 
       fs.readFile filename, "binary", (err, file)->
         if err
