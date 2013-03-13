@@ -246,6 +246,9 @@ class theoricus.commands.Compiler
     new theoricus.commands.Config app, routes
 
   to_single_line:( code )->
+    return code;
+
+    # temporarily disabled for debugging purposes
     theoricus.commands.Compiler.to_single_line code
 
   @to_single_line = ( code, ugli )->
