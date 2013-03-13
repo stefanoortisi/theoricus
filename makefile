@@ -9,10 +9,12 @@ watch:
 
 build:
 	git submodule update --init
-	
+
+	npm install
+
 	$(TOASTER) . -c
-link: build
-	sudo npm link
+install: build
+	npm link
 
 test: build
 	# TODO: add testing routine
